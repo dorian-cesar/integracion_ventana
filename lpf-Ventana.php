@@ -148,6 +148,7 @@ foreach ($array as $item) {
 };
 
 $payrol=json_encode($total, http_response_code(200));
+echo $payrol;
 
 $curl = curl_init();
 
