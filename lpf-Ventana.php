@@ -153,7 +153,7 @@ echo $payrol;
 $curl = curl_init();
 
 curl_setopt_array($curl, array(
-  CURLOPT_URL => 'http://ws.migtra.com/rawtest/codelcodvenbus',
+  CURLOPT_URL => 'https://ws.migtra.com/rawtest/codelcodvenbus',
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => '',
   CURLOPT_MAXREDIRS => 10,
