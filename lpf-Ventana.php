@@ -6,6 +6,10 @@
 
 //$cap="73b33d8456d54d56b0b55a7aa005c038";
 
+Loop:
+
+date_default_timezone_set("America/Santiago");
+
 $user="Ventana";
 
 
@@ -56,6 +60,7 @@ $response2 = curl_exec($curl);
 $json = json_decode($response2);
 
 $array = $json->list;
+
 
 
 //echo '[';
@@ -118,13 +123,13 @@ foreach ($array as $item) {
   if($ignicion){$motor=1;}else{$motor=0;}
 
 
-    $json =array (
+    $json3 =array (
 
 
       'id'=>$id,
       'asset'=>$plate,
       'dtgps'=>$ultima_Conexion,
-      'dtrx'=>$ultima_Conexion,
+      'dtrx'=>date("Y-m-d\TH:i:s"),
       'lat'=>$lat,
       'lon'=>$lng,
       'alt'=>$alt,
@@ -141,14 +146,14 @@ foreach ($array as $item) {
       
     );
 
-    $total[$i]=$json;
+    $total[$i]=$json3;
 
     $i++;
 
 };
 
 $payrol=json_encode($total, http_response_code(200));
-echo $payrol;
+
 
 $curl = curl_init();
 
@@ -172,6 +177,12 @@ $response = curl_exec($curl);
 
 curl_close($curl);
 echo $response;
+
+echo "<br>";
+goto Loop;
+
+
+
 
 
 
