@@ -1,14 +1,10 @@
 <?php
-//include "./login/login-lascondes.php";
-// include "login/conexion.php";
 
-//require_once './login/login-bronces.php';
-
-//$cap="73b33d8456d54d56b0b55a7aa005c038";
 
 Loop:
 
-date_default_timezone_set("America/Santiago");
+
+
 
 $user="Ventana";
 
@@ -102,7 +98,26 @@ foreach ($array as $item) {
 
   $last_u = $array2 = $json2->state->last_update;
 
+
   $ultima_Conexion=date("Y-m-d\TH:i:s", strtotime($last_u));
+
+  $ultima_Conexion_utc_3 = $ultima_Conexion; // Guarda la fecha/hora en UTC-3 actual
+
+  // Establecer la zona horaria de Santiago (UTC-3)
+  $zona_horaria_santiago = new DateTimeZone('America/Santiago');
+  
+  // Crear un objeto DateTime con la fecha y hora en UTC-3
+  $fecha_utc_3 = new DateTime($ultima_Conexion_utc_3, $zona_horaria_santiago);
+  
+  // Establecer la zona horaria a UTC (UTC+0)
+  $zona_horaria_utc = new DateTimeZone('UTC');
+  $fecha_utc_3->setTimezone($zona_horaria_utc);
+  
+  // Obtener la fecha y hora en formato deseado (UTC+0)
+  $ultima_Conexion_utc_0 = $fecha_utc_3->format('Y-m-d\TH:i:s');
+  
+  // Reemplazar $ultima_Conexion con la fecha y hora en UTC+0
+  $ultima_Conexion = $ultima_Conexion_utc_0;
 
 
   $plate = substr($item->label,0,7);
@@ -122,13 +137,14 @@ foreach ($array as $item) {
 
   if($ignicion){$motor=1;}else{$motor=0;}
 
-
+  date_default_timezone_set('UTC');
+  
     $json3 =array (
 
 
       'id'=>$id,
       'asset'=>$plate,
-      'dtgps'=>$ultima_Conexion,
+      'dtgps'=>$ultima_Conexion, 
       'dtrx'=>date("Y-m-d\TH:i:s"),
       'lat'=>$lat,
       'lon'=>$lng,
@@ -151,14 +167,14 @@ foreach ($array as $item) {
     $i++;
 
 };
-
+//echo
 $payrol=json_encode($total, http_response_code(200));
 
 
 $curl = curl_init();
 
 curl_setopt_array($curl, array(
-  CURLOPT_URL => 'https://ws.migtra.com/rawtest/codelcodvenbus',
+  CURLOPT_URL => 'https://ws.migtra.com/rawdata/codelcodvenbus',
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => '',
   CURLOPT_MAXREDIRS => 10,
@@ -180,6 +196,7 @@ echo $response;
 
 echo "<br>";
 goto Loop;
+
 
 
 
