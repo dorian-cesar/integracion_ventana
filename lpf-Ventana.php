@@ -1,18 +1,15 @@
 <?php
 
 
-Loop:
-sleep(15);
-
-
-
-
 $user="Ventana";
 
 
 $pasw="123";
 
 include "login/conexion.php";
+
+Loop:
+sleep(15);
 
 $consulta="SELECT hash FROM masgps.hash where user='$user' and pasw='$pasw'";
 
